@@ -1,0 +1,84 @@
+:root {
+	--button-color: #e4e8ec;
+	--background-color: #ccd1d8;
+	font-family: "Roboto Flex", sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+#app {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	transition: all 0.3s ease-in-out;
+}
+
+.operation-button {
+	background-color: var(--button-color);
+	border: none;
+	padding: 10px;
+	font-size: clamp(0px, 5vw, 30px);
+	user-select: none;
+	cursor: pointer;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.bottom {
+	display: grid;
+	grid-template-areas:
+		"clear clear-entry power divide"
+		"one two three multiply"
+		"four five six subtract"
+		"seven eight nine add"
+		"zero zero decimal result";
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.wrapper {
+	width: clamp(0px, 100%, 600px);
+	background: var(--background-color);
+	padding: 15px;
+	border-radius: 10px;
+}
+
+@media screen and (0px < width < 600px) {
+	.wrapper {
+		background: transparent;
+	}
+	#app {
+		align-items: flex-start;
+	}
+}
+
+.zero {
+	grid-area: zero;
+}
+
+.top {
+	display: flex;
+	flex-direction: column;
+}
+
+.top > div {
+	text-align: right;
+	font-size: clamp(0px, 4vw, 25px);
+	background: var(--button-color);
+	margin: 5px;
+	padding: 10px 5px;
+	border-radius: 5px;
+	overflow-x: scroll;
+}
+
+.top span {
+	margin: 0 10px;
+	display: inline;
+	white-space: pre;
+}
