@@ -18,8 +18,9 @@ export function activateEventListeners() {
 }
 
 window.addEventListener("keyup", (event) => {
-	if (event.key === "Backspace") {
-		deleteCharacter();
+	if (isFinite(parseInt(event.key)) || event.key === ".") {
+		addNumberToCurrentSum(event.key, getNeededIndex());
+		updateDisplay();
 		return;
 	}
 	if (operators.includes(event.key)) {
@@ -27,13 +28,12 @@ window.addEventListener("keyup", (event) => {
 		updateDisplay();
 		return;
 	}
-	if (event.key === "Enter" || (event.key === "=" && currentSum.length !== 2)) {
-		updateResult(currentSum, false);
+	if (event.key === "Backspace") {
+		deleteCharacter();
 		return;
 	}
-	if (isFinite(parseInt(event.key)) || event.key === ".") {
-		addNumberToCurrentSum(event.key, getNeededIndex());
-		updateDisplay();
+	if (event.key === "Enter" || (event.key === "=" && currentSum.length !== 2)) {
+		updateResult(currentSum, false)
 		return;
 	}
 });
@@ -41,29 +41,28 @@ window.addEventListener("keyup", (event) => {
 // stuff for operators
 
 function operatorListener() {
-	const operatorButtons = document.querySelectorAll(".operator");
+	const operatorButtons: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".operator");
 	operatorButtons.forEach((operator) => {
 		operator.addEventListener("click", () => {
-			addOperatorToCurrentSum(operator.textContent);
+			addOperatorToCurrentSum(operator.value);
 			updateDisplay();
 		});
 	});
 }
 
 function addOperatorToCurrentSum(operator: string): void {
-	if (currentSum.length === 3) updateResult(currentSum, true);
+	const index = getNeededIndex()
+	if (operator === "-" && !currentSum[index]) {
+		addNumberToCurrentSum(operator, index);
+		return;
+	}
+		if (currentSum.length === 3) updateResult(currentSum, true);
+
 	if (!currentSum[0]) currentSum[0] = result;
 	if (currentSum[2] === undefined) {
-		currentSum[1] = translateToMachineOperator(operator);
+		currentSum[1] = operator;
 	}
 }
-
-function translateToMachineOperator(operator: string): string {
-	if (operator === "×") return "*";
-	if (operator === "÷") return "/";
-	return operator;
-}
-
 //end stuff for operators
 
 // stuff for backspace
@@ -89,7 +88,7 @@ function deleteCharacter() {
 
 function resultListener(): void {
 	document.querySelector(".result").addEventListener("click", () => {
-		if (currentSum.length !== 2) updateResult(currentSum, false);
+		if (currentSum.length !== 2) updateResult(currentSum, false)
 	});
 }
 
