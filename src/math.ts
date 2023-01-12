@@ -19,9 +19,14 @@ export function clear(clearResult: boolean) {
 }
 
 export function updateResult(input, copyResultToCurrentSum?: boolean) {
+	if (!input.length) return;
 	copyResultToCurrentSum = false;
-	if (input.length > 0) result = executeOperation(input);
-	if (input.length === 1 && input[0]) result = input[0];
+	if (input[0] && !input[0].toString().includes("-") && input.length === 1)
+		result = input[0];
+	if (input[0].toString().includes("-") && input.length === 1 && input[0])
+		input = [result, "-", Math.abs(input[0])];
+	if (input.length > 1) result = executeOperation(input);
+
 	updateDisplay();
 	if (copyResultToCurrentSum) {
 		currentSum.splice(0, 3, result);

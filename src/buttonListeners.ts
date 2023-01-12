@@ -24,7 +24,7 @@ window.addEventListener("keyup", (event) => {
 		return;
 	}
 	if (operators.includes(event.key)) {
-		addOperatorToCurrentSum(event.key);
+		addOperatorToCurrentSum(event.key, currentSum);
 		updateDisplay();
 		return;
 	}
@@ -45,13 +45,14 @@ function operatorListener() {
 		document.querySelectorAll(".operator");
 	operatorButtons.forEach((operator) => {
 		operator.addEventListener("click", () => {
-			addOperatorToCurrentSum(operator.value);
+			addOperatorToCurrentSum(operator.value, currentSum);
 			updateDisplay();
 		});
 	});
 }
 
-function addOperatorToCurrentSum(operator: string): void {
+function addOperatorToCurrentSum(operator: string, currentSum): void {
+	if (currentSum[0] === "-" && operator === "-") return;
 	const index = getNeededIndex();
 	if (operator === "-" && !currentSum[index]) {
 		addNumberToCurrentSum(operator, index);
