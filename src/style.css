@@ -38,7 +38,7 @@ body {
 		"one two three multiply"
 		"four five six subtract"
 		"seven eight nine add"
-		"zero zero decimal result";
+		"zero decimal power result";
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
@@ -56,10 +56,6 @@ body {
 	#app {
 		align-items: flex-start;
 	}
-}
-
-.zero {
-	grid-area: zero;
 }
 
 .top {

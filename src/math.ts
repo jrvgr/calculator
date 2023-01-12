@@ -34,10 +34,12 @@ export function executeOperation(input): number | "Error" {
 	const firstNum = parseFloat(input[0]);
 	const secondNum = parseFloat(input[2]);
 	let result;
+
+	result = firstNum + secondNum;
 	if (input[1] === "*") result = firstNum * secondNum;
 	if (input[1] === "/") result = firstNum / secondNum;
 	if (input[1] === "-") result = firstNum - secondNum;
-	result = firstNum + secondNum;
+	if (input[1] === "^") result = Math.pow(firstNum, secondNum);
 
 	if (isNaN(result)) return "Error";
 	return result;

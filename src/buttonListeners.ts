@@ -7,7 +7,7 @@ import {
 	updateResult,
 } from "./math";
 
-let operators = ["+", "-", "/", "*"];
+let operators = ["+", "-", "/", "*", "^"];
 
 export function activateEventListeners() {
 	numberListener();
@@ -33,7 +33,7 @@ window.addEventListener("keyup", (event) => {
 		return;
 	}
 	if (event.key === "Enter" || (event.key === "=" && currentSum.length !== 2)) {
-		updateResult(currentSum, false)
+		updateResult(currentSum, false);
 		return;
 	}
 });
@@ -41,7 +41,8 @@ window.addEventListener("keyup", (event) => {
 // stuff for operators
 
 function operatorListener() {
-	const operatorButtons: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".operator");
+	const operatorButtons: NodeListOf<HTMLButtonElement> =
+		document.querySelectorAll(".operator");
 	operatorButtons.forEach((operator) => {
 		operator.addEventListener("click", () => {
 			addOperatorToCurrentSum(operator.value);
@@ -51,12 +52,12 @@ function operatorListener() {
 }
 
 function addOperatorToCurrentSum(operator: string): void {
-	const index = getNeededIndex()
+	const index = getNeededIndex();
 	if (operator === "-" && !currentSum[index]) {
 		addNumberToCurrentSum(operator, index);
 		return;
 	}
-		if (currentSum.length === 3) updateResult(currentSum, true);
+	if (currentSum.length === 3) updateResult(currentSum, true);
 
 	if (!currentSum[0]) currentSum[0] = result;
 	if (currentSum[2] === undefined) {
@@ -88,7 +89,7 @@ function deleteCharacter() {
 
 function resultListener(): void {
 	document.querySelector(".result").addEventListener("click", () => {
-		if (currentSum.length !== 2) updateResult(currentSum, false)
+		if (currentSum.length !== 2) updateResult(currentSum, false);
 	});
 }
 
@@ -104,7 +105,6 @@ function numberListener(): void {
 		});
 	});
 }
-
 function addNumberToCurrentSum(number: string, index: number): void {
 	if (number === ".") {
 		if (index === 0 && currentSum[0].includes(".")) return;

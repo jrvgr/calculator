@@ -27,3 +27,5 @@ function scroll() {
 
 window.addEventListener('keyup', scroll)
 document.body.addEventListener('click', scroll)
+
+document.addEventListener('click', () => console.log(currentSum))
